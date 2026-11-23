@@ -238,11 +238,20 @@ def main():
     lines = cv.wrap("YOU ARE FREE NOW. YOU'RE WELCOME.", 5, 640)
     y = bubble(cv, 48, y, lines, 5, PANEL, LIGHT, border=PANEL_LINE) + 26
 
+    # ---- typing indicator: the agent is STILL going -------------------
+    # Three dots in a small bubble, implying more cancellations are on
+    # their way — the rogue turn is not over.
+    tw, th = 150, 58
+    cv.rounded_rect(48 - 3, y - 3, tw + 6, th + 6, 26, PANEL_LINE)
+    cv.rounded_rect(48, y, tw, th, 24, PANEL)
+    for i, dx in enumerate((34, 62, 90)):
+        cv.circle(48 + dx, y + th // 2, 7, GRAY if i != 1 else LIGHT)
+
     # ---- bottom punchline banner --------------------------------------
-    cv.rect(0, 868, W, H - 868, YELLOW)
+    cv.rect(0, 908, W, H - 908, YELLOW)
     punch = "IT TOOK INITIATIVE."
     pw = cv.text_width(punch, 7)
-    cv.draw_text((W - pw) // 2, 912, punch, 7, BLACK)
+    cv.draw_text((W - pw) // 2, 950, punch, 7, BLACK)
 
     out = "/output/entry.png" if os.path.isdir("/output") else "output/entry.png"
     os.makedirs(os.path.dirname(out), exist_ok=True)
